@@ -31,6 +31,9 @@
           },
           "400": {
             "description": "Request malformed: too many query parameters"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -59,6 +62,9 @@
           },
           "400": {
             "description": "Request malformed: too many query parameters"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -79,21 +85,27 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Financials"
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           },
           "400": {
             "description": "Request malformed: too many query parameters"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/info": {
       "get": {
-        "summary": "Get stock information",
+        "summary": "Get stock info",
         "parameters": [
           {
             "name": "ticker",
@@ -112,6 +124,43 @@
           },
           "400": {
             "description": "Request malformed: too many query parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/cashflow": {
+      "get": {
+        "summary": "Get cashflow",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Stock ticker"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request malformed: too many query parameters"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -187,58 +236,24 @@
           "type": "string",
           "description": "Date of the financial data"
         }
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       }
     },
     "Info": {
       "type": "object",
       "properties": {
-        "sector": {
+        "symbol": {
           "type": "string",
-          "description": "Sector of the stock"
-        },
-        "fullTimeEmployees": {
-          "type": "integer",
-          "description": "Number of full-time employees"
-        },
-        "longBusinessSummary": {
-          "type": "string",
-          "description": "Long business summary"
-        },
-        "city": {
-          "type": "string",
-          "description": "City of the company"
-        },
-        "phone": {
-          "type": "string",
-          "description": "Phone number of the company"
-        },
-        "state": {
-          "type": "string",
-          "description": "State of the company"
-        },
-        "country": {
-          "type": "string",
-          "description": "Country of the company"
-        },
-        "website": {
-          "type": "string",
-          "description": "Website of the company"
-        },
-        "maxAge": {
-          "type": "integer",
-          "description": "Max age"
-        },
-        "zip": {
-          "type": "string",
-          "description": "ZIP code of the company"
-        },
-        "shortName": {
-          "type": "string",
-          "description": "Short name of the company"
+          "description": "Stock symbol"
         },
         "longName": {
           "type": "string",
-          "description": "Long name of the company"
+          "description": "Long name of the stock"
         }
       }
     }

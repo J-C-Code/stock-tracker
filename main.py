@@ -46,6 +46,14 @@ class Ticker:
         info = tickName.info
         return info
     
+    def cashflow(self):
+        tickName = yf.Ticker(self.ticker)
+        _cashFlow = tickName.cashflow
+        _cashFlow.reset_index(inplace=True)
+        _cashFlow.columns = _cashFlow.columns.astype(str)
+        _cashFlow = _cashFlow.applymap(str)
+        return _cashFlow.to_dict(orient='list')
+    
 
 @app.route('/history', methods=['GET'])
 def stock_history():
@@ -60,6 +68,22 @@ def stock_history():
             return jsonify(history)  # Return as JSON
         else:
             return jsonify({"error": "You must enter a stock ticker!"}), 400
+
+
+@app.route('/cashflow', methods=['GET'])
+def stock_cashflow():
+    if request.method == 'GET':
+        args = request.args
+        if len(args) > 2:
+            return jsonify({"error": "Request malformed: too many query parameters"}), 400
+        if 'ticker' in args:
+            ticker = args['ticker']
+            ticker_instance = Ticker(ticker=str(ticker))
+            _cashFlow = ticker_instance.cashflow()  # Call the method to get recommendations
+            return jsonify(_cashFlow)  # Return as JSON
+        else:
+            return jsonify({"error": "You must enter a stock ticker!"}), 400
+
 
 @app.route('/info', methods=['GET'])
 def stock_info():
