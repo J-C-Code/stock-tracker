@@ -14,9 +14,10 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
     config={
-        'app_name': "Weather-API"
+        'app_name': "Stock-API"
     }
 )
+
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 class Ticker:
     def __init__(self, ticker):
