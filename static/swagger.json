@@ -1,0 +1,168 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Stock API",
+    "version": "1.0",
+    "description": "API for fetching stock data"
+  },
+  "basePath": "/",
+  "paths": {
+    "/history": {
+      "get": {
+        "summary": "Get historical data",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Stock ticker"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/History"
+              }
+            }
+          },
+          "400": {
+            "description": "Request malformed: too many query parameters"
+          }
+        }
+      }
+    },
+    "/recommend": {
+      "get": {
+        "summary": "Get recommendations",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Stock ticker"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Recommendations"
+              }
+            }
+          },
+          "400": {
+            "description": "Request malformed: too many query parameters"
+          }
+        }
+      }
+    },
+    "/financials": {
+      "get": {
+        "summary": "Get financials",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Stock ticker"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Financials"
+              }
+            }
+          },
+          "400": {
+            "description": "Request malformed: too many query parameters"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "History": {
+      "type": "object",
+      "properties": {
+        "Date": {
+          "type": "string",
+          "description": "Date of the historical data"
+        },
+        "Open": {
+          "type": "number",
+          "description": "Opening price"
+        },
+        "High": {
+          "type": "number",
+          "description": "Highest price"
+        },
+        "Low": {
+          "type": "number",
+          "description": "Lowest price"
+        },
+        "Close": {
+          "type": "number",
+          "description": "Closing price"
+        },
+        "Volume": {
+          "type": "number",
+          "description": "Trading volume"
+        },
+        "Dividends": {
+          "type": "number",
+          "description": "Dividends"
+        },
+        "Stock Splits": {
+          "type": "number",
+          "description": "Stock splits"
+        }
+      }
+    },
+    "Recommendations": {
+      "type": "object",
+      "properties": {
+        "Date": {
+          "type": "string",
+          "description": "Date of the recommendation"
+        },
+        "Firm": {
+          "type": "string",
+          "description": "Firm making the recommendation"
+        },
+        "To Grade": {
+          "type": "string",
+          "description": "Grade assigned to the stock"
+        },
+        "From Grade": {
+          "type": "string",
+          "description": "Grade before the recommendation"
+        },
+        "Action": {
+          "type": "string",
+          "description": "Action recommended"
+        }
+      }
+    },
+    "Financials": {
+      "type": "object",
+      "properties": {
+        "Date": {
+          "type": "string",
+          "description": "Date of the financial data"
+        }
+      }
+    }
+  }
+}
