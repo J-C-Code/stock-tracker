@@ -17,8 +17,8 @@ swaggerui_blueprint = get_swaggerui_blueprint(
         'app_name': "Stock-API"
     }
 )
-
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
 class Ticker:
     def __init__(self, ticker):
         self.ticker = ticker
@@ -41,6 +41,10 @@ class Ticker:
         finances = finances.applymap(str)  # Convert all values to strings
         return finances.to_dict(orient='list')  # Convert DataFrame to dictionary with lists as values
 
+    def info(self):
+        tickName = yf.Ticker(self.ticker)
+        info = tickName.info
+        return info
     
 
 @app.route('/history', methods=['GET'])
@@ -52,10 +56,25 @@ def stock_history():
         if 'ticker' in args:
             ticker = args['ticker']
             ticker_instance = Ticker(ticker=str(ticker))
-            recommendation = ticker_instance.history()  # Call the method to get recommendations
-            return jsonify(recommendation)  # Return as JSON
+            history = ticker_instance.history()  # Call the method to get recommendations
+            return jsonify(history)  # Return as JSON
         else:
             return jsonify({"error": "You must enter a stock ticker!"}), 400
+
+@app.route('/info', methods=['GET'])
+def stock_info():
+    if request.method == 'GET':
+        args = request.args
+        if len(args) > 2:
+            return jsonify({"error": "Request malformed: too many query parameters"}), 400
+        if 'ticker' in args:
+            ticker = args['ticker']
+            ticker_instance = Ticker(ticker=str(ticker))
+            info = ticker_instance.info()  # Call the method to get recommendations
+            return jsonify(info)  # Return as JSON
+        else:
+            return jsonify({"error": "You must enter a stock ticker!"}), 400
+
 
 
 @app.route('/recommend', methods=['GET'])

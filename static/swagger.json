@@ -90,6 +90,31 @@
           }
         }
       }
+    },
+    "/info": {
+      "get": {
+        "summary": "Get stock information",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Stock ticker"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Info"
+            }
+          },
+          "400": {
+            "description": "Request malformed: too many query parameters"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -161,6 +186,59 @@
         "Date": {
           "type": "string",
           "description": "Date of the financial data"
+        }
+      }
+    },
+    "Info": {
+      "type": "object",
+      "properties": {
+        "sector": {
+          "type": "string",
+          "description": "Sector of the stock"
+        },
+        "fullTimeEmployees": {
+          "type": "integer",
+          "description": "Number of full-time employees"
+        },
+        "longBusinessSummary": {
+          "type": "string",
+          "description": "Long business summary"
+        },
+        "city": {
+          "type": "string",
+          "description": "City of the company"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number of the company"
+        },
+        "state": {
+          "type": "string",
+          "description": "State of the company"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country of the company"
+        },
+        "website": {
+          "type": "string",
+          "description": "Website of the company"
+        },
+        "maxAge": {
+          "type": "integer",
+          "description": "Max age"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code of the company"
+        },
+        "shortName": {
+          "type": "string",
+          "description": "Short name of the company"
+        },
+        "longName": {
+          "type": "string",
+          "description": "Long name of the company"
         }
       }
     }
