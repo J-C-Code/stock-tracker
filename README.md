@@ -51,6 +51,15 @@
 - **Response**:
   - Returns a list of financial records including date and various financial metrics.
 
+### `/info`
+
+- **Method**: GET
+- **Description**: Get basic information for a stock.
+- **Parameters**:
+  - `ticker`: Stock ticker symbol (required)
+- **Response**:
+  - Returns a list of basic info regarding the company
+
 ## Disclaimer
 
 This API is not for commercial use as per the Yahoo Finance API documentation. The creation and publication of this project are purely for educational purposes.
